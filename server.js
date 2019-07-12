@@ -27,44 +27,57 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
+mongoose.connect(MONGODB_URI);
 // Routes
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("http://www.echojs.com/").then(function(response) {
+  axios.get("https://www.wired.com").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
-      // Save an empty result object
+    $(".post-listing-list-item__post").each(function(i, element) {
+
+      // console.log($(element).text());
+  
+      // var title = $(element).children().text();
+      // var title = $(element).text();
+      var link = "wired.com"+$(element).find("a.post-listing-list-item__link").attr("href");
+      var title = $(element).find("h5.post-listing-list-item__title").text().split(": ")[0];
+      var img = $(element).find("a.post-listing-list-item__link").find("div.post-listing-list-item__image--small").find("div.aspect-ratio-component").find("div.image-group-component").find("img").attr("src");
+  
+      // Save these results in an object that we'll push into the results array we defined earlier
       var result = {};
-
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this)
-        .children("a")
-        .text();
-      result.link = $(this)
-        .children("a")
-        .attr("href");
-
-      // Create a new Article using the `result` object built from scraping
+      result.title = title;
+      result.link = link;
+      result.img = img;
       db.Article.create(result)
-        .then(function(dbArticle) {
-          // View the added result in the console
-          console.log(dbArticle);
-        })
-        .catch(function(err) {
-          // If an error occurred, log it
-          console.log(err);
-        });
+      .then(function(dbArticle) {
+        // View the added result in the console
+        console.log(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, log it
+        console.log(err.body);
+        res.json(err);
+      });
     });
 
     // Send a message to the client
-    res.send("Scrape Complete");
+    // res.JSON();
+    db.Article.find({})
+    .then(function(dbArticle) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
   });
 });
 
@@ -72,6 +85,20 @@ app.get("/scrape", function(req, res) {
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
   db.Article.find({})
+    .then(function(dbArticle) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+// Route for getting all Saved Articles from the db
+app.get("/articles/saved", function(req, res) {
+  // Grab every document in the Articles collection
+  db.Article.findAll({isSaved: true})
+    .populate("note")
     .then(function(dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);

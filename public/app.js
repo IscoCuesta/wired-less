@@ -1,11 +1,21 @@
-// Grab the articles as a json
-$.getJSON("/articles", function(data) {
+function render (data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    var div = $("<div>").addClass("article");
+    var title = $("<h3>").text(data[i].title).attr("data-id", data[i]._id).addClass("title-article");
+    var img = $("<img>").attr("src", data[i].img).addClass("img-article");
+    var link = $("<a>").href(data[i].img).text("Go to Read it!").addClass("link");
+    var br = $("<br>")
+    div.append(img, title, br, link);
+    $("#articles").append(div);
+    // $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br /><img src="+data[i].img +"></img>" + data[i].link + "</p>");
   }
-});
+};
+
+// Grab the articles as a json
+
+// $.getJSON("/articles", render(data));
 
 
 // Whenever someone clicks a p tag
@@ -69,4 +79,20 @@ $(document).on("click", "#savenote", function() {
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");
+});
+
+$(document).on("click", ".Scrape", function() {
+
+  // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+    method: "GET",
+    url: "/scrape",
+  })
+    // With that done
+    .then(function(data) {
+      // Log the response
+      console.log(data);
+      render(data)
+    });
+
 });

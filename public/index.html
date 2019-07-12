@@ -2,9 +2,9 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Scraping With Mongoose</title>
+    <title>Wired-less</title>
     <style>
-      body { background-color: #F2F6D0 }
+      body { background-color: rgb(246, 246, 246) }
       #wrapper {
         width: 960px;
         margin-left: auto;
@@ -24,7 +24,7 @@
       textarea, input {
         display: block;
         width: 100%;
-        background-color: #FCF5C7;
+        background-color: rgb(246, 246, 246)
       }
       input {
         height: 36px;
@@ -34,12 +34,26 @@
         height: 200px;
         font-size: 18px;
       }
+      .logo {
+        width: 80%;
+        position: relative;
+        left: 10%;
+        height: 400px;
+      }
+      button {
+        position:relative;
+        left: 13%;
+        margin-top: 1rem;
+      }
     </style>
   </head>
   <body>
+    <img src="./img/wired.jpg" class="logo"><br>
+   <button class="Scrape">Search Articles</button>
+    <button class="Saved ">Saved</button>
     <div id="wrapper">
-      <h1>Note Scraper</h1>
-      <h2><i>If you can do this...the homework should be no problem.</i></h2>
+      <h1>The Popular Ones:</h1>
+      <h2><i>You Can't sit with us!</i></h2> <br>
       <div id="articles"></div>
       <div id="notes"></div>
     </div>
