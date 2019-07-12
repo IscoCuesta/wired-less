@@ -37,8 +37,9 @@ $(document).ready(function() {
     // With that done
     .then(function(data) {
       // Log the response
-      console.log(data);
-      render(data)
+      // console.log(data);
+      render(data);
+      
     });
 });
 
