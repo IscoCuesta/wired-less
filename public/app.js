@@ -2,7 +2,7 @@ function render (data) {
   // For each one
     $("#articles").empty();
 
-  for (var i = 0; i < data.length; i++) {
+  for (var i = 0; i <= 20; i++) {
     // Display the apropos information on the page
     var div = $("<div>").addClass("article col");
     var title = $("<p>").text(data[i].title).attr("data-id", data[i]._id).addClass("title-article header");
