@@ -14,12 +14,8 @@
       #articles {
         display: inline-block;
         overflow: auto;
-        width: 60%;
-        height: 1000px;
-      }
-      #notes {
-        float: right;
-        width: 30%;
+        width: 85%;
+        height: auto;
       }
       textarea, input {
         display: block;
@@ -38,7 +34,7 @@
         width: 80%;
         position: relative;
         left: 10%;
-        height: 250px;
+        height: auto;
       }
       button {
         position:relative;
@@ -54,26 +50,19 @@
         border-top-color: black;
         border-top-style: solid;
       }
-      .Saved {
-        position: relative;
-        left: 70%;
-      }
     </style>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
              
   </head>
   <body>
-    <img src="./img/wired.jpg" class="logo"><br>
-   <button class="Scrape amber darken-3 waves-effect waves-light btn">Search Articles</button>
-   <a href="/Saved"><button class="Saved blue-grey darken-2 waves-effect waves-light btn">Saved</button></a>
-    <div id="wrapper">
-      <h3>The Popular Ones:</h3>
-      <h4><i>You Can't sit with us!</i></h4> <br>
+    <img src="./img/wiredSaved.jpg" class="logo"><br>
+   <a href="/"><button class="Home blue-gray waves-effect waves-light btn">Home</button></a>
+   <div id="wrapper">
+      <h3>The Saved Ones:</h3>
       <div id="articles" class="row"></div>
-      <div id="notes"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="app.js"></script>
+    <script src="appSaved.js"></script>
   </body>
 </html>
