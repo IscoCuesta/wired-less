@@ -6,7 +6,7 @@
     <style>
       body { background-color: rgb(246, 246, 246) }
       #wrapper {
-        width: 960px;
+        width: 90%;
         margin-left: auto;
         margin-right: auto;
         padding-top: 5%;
@@ -14,8 +14,12 @@
       #articles {
         display: inline-block;
         overflow: auto;
-        width: 85%;
+        width: 80%;
         height: auto;
+      }
+      #notes {
+        float: right;
+        width: 20%;
       }
       textarea, input {
         display: block;
@@ -61,6 +65,7 @@
    <div id="wrapper">
       <h3>The Saved Ones:</h3>
       <div id="articles" class="row"></div>
+      <div id="notes"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="appSaved.js"></script>
