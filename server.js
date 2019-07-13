@@ -133,6 +133,10 @@ app.get("/articles/saved", function(req, res) {
     });
 });
 
+app.get("/", function(req, res) {
+  // Grab every document in the Articles collection
+  res.sendFile(path.join(__dirname+'/public/index.html'))
+});
 app.get("/saved", function(req, res) {
   // Grab every document in the Articles collection
   res.sendFile(path.join(__dirname+'/public/Saved.html'))
